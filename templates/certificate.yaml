@@ -1,0 +1,16 @@
+{{- if .Values.gateway.tls.enable -}}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: main-gateway-certificate
+  namespace: home-gateway
+spec:
+  secretName: {{ .Values.gateway.tls.secretName }}
+  dnsNames:
+{{- range .Values.gateway.tls.dnsNames }}
+    - {{ . }}
+{{- end }}
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+{{- end -}}
