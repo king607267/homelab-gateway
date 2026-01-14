@@ -41,6 +41,10 @@ spec:
             matchLabels:
               {{ .matchLabels }}
       tls:
+        certificateRefs:
+          - kind: Secret
+            group: ""
+            name: {{ $.Values.gateway.tls.secretName }}
         mode: Passthrough
 {{- else if hasPrefix "HTTP" (upper .protocol) }}
     - name: {{ .name }}
